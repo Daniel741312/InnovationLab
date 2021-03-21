@@ -12,7 +12,7 @@
 
 ### 1-实现思路概述
 
-When it comes to 图像识别，首先想到的肯定是深度学习，但是我并不会，只懂个其中的皮毛，同时考虑到树莓派算力有限，跑神经网络可能有一定难度（未考证），所以采用了一种更为简单的解决方案：采用<a href="https://ai.baidu.com/ai-doc/IMAGERECOGNITION/Mk3bcxfbi">BaiduAI开放平台</a>提供的图像识别同时接口配合<a href="https://www.tianapi.com/">天行数据</a>提供的垃圾分类查询接口实现图像识别并分类。因此这部分的功能就是读入一张垃圾的图片，输出它属于什么垃圾。
+When it comes to 图像识别，首先想到的肯定是深度学习，但是我并不会，只懂个其中的皮毛，同时考虑到树莓派算力有限，跑神经网络可能有一定难度（未考证），所以采用了一种更为简单的解决方案：采用<a href="https://ai.baidu.com">BaiduAI开放平台</a>提供的图像识别接口同时配合<a href="https://www.tianapi.com/">天行数据</a>提供的垃圾分类查询接口实现图像识别并分类。因此这部分的功能就是读入一张垃圾的图片，输出它属于什么垃圾（用整数表示）。
 
 ### 2-BaiduAI开放平台的使用
 
@@ -26,7 +26,7 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 
 #### 2.安装相关的库
 
-首先声明，如果在本地机器（Ubuntu18.04）上能够安装好并跑通的库在树莓派上不能用，你还找不到正确的原因，请直接重装树莓派最新的系统，这是我浪费了一天时间得到的深刻教训：当时编译文件时一直报错Json库下的一个什么函数是未定义的引用，动态链接器报的错，我查了半天确认了相关目录下有`libjsoncpp`动态库，但是g++死活找不到，一气之下直接重装系统，一次编译运行成功。
+首先声明，如果在本地机器（Ubuntu18.04）上能够安装好并跑通的库在树莓派上不能用，还找不到正确的原因，直接重装树莓派最新的系统。这是我浪费了一天时间得到的教训：当时编译文件时一直报错Json库下的一个什么函数是未定义的引用，动态链接器报的错，我查了半天确认了相关目录下有`libjsoncpp`动态库，但是g++死活找不到，一气之下直接重装系统，一次编译运行成功。
 
 言归正传，下面安装这三个库：
 
@@ -34,7 +34,21 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 
 这是一个可以发送很多网络请求的C库，利用它可以发送http请求，模拟浏览器的行为；
 
-安装方法：https://blog.csdn.net/simonyucsdy/article/details/82835268；
+安装方法：
+
+首先到官网下载源码包：https://curl.haxx.se/download.html
+
+解压、进入主目录进行安装（经典三部曲）：
+
+```bash
+tar -zxvf curl-7.51.0.tar.gz
+ 
+sudo ./configure
+ 
+sudo make
+ 
+sudo make install
+```
 
 头文件目录：
 
@@ -43,6 +57,8 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 动态库目录：
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfaHslxq4faTN4yyGn9wdCKW2q764ohSU1E0lCzklEzjboZSe7TNcAQ1gBGTPV7iR.8!/r" align="left"/>
+
+
 
 关于如何使用curl库，这里有详细的视频教程：https://www.bilibili.com/video/BV1o7411w75c
 
@@ -58,13 +74,13 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2H679HyocvIkCFInejJtyhkcp*jWRtKzKG4p5ZCX4J*YuBpxvIYG1tEGZta9yCW99U!/r" align="left"/>
 
-动态库目录：<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2Hn37FYb8kBfij2w6hvRYjZ.tvoKVl*oYlzAKjGmr.VR3whq.jYHmIwIfCCExSUJBI!/r" align="left"/>
+动态库目录：
+
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2Hn37FYb8kBfij2w6hvRYjZ.tvoKVl*oYlzAKjGmr.VR3whq.jYHmIwIfCCExSUJBI!/r" align="left"/>
 
 
 
-
-
-他这个BaiduAI提供的SDK中json头文件引用的目录是错的，他直接`#include<json/json.h>`，少了一层jsoncpp，前面都加上就好了。顺便提醒你gcc的头文件搜索顺序：
+有一说一，他这个BaiduAI提供的SDK中json头文件引用的目录是错的，他直接`#include<json/json.h>`，少了一层jsoncpp，在前面都加上就好了。顺便提醒你gcc的头文件搜索顺序：
 
 - 由参数-I指定的路径(指定路径有多个路径时，按指定路径的顺序搜索)
 - 然后找gcc的环境变量 C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, OBJC_INCLUDE_PATH
@@ -81,7 +97,9 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 
 负责https的吧，跟安全有关，安装就完事了；
 
-安装方法：https://www.cnblogs.com/Yogile/p/12914741.html，应该也是一条命令搞定；
+安装方法：https://www.cnblogs.com/Yogile/p/12914741.html
+
+应该也是一条命令搞定；
 
 头文件目录：<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2F4LoocHbggT4mZKbtuAGjusy*BJavicduEi85phvJyy67gOloZVQEMUAdLAlpOiXo!/r" align="left"/>
 
@@ -99,7 +117,7 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 
 ## n、服务器端部分
 
-首先需要声明的是这部分不是跑在树莓派上的，是跑在本地机器，或者正经服务器上的，两个服务器程序配合，相当于一个Manager。
+首先需要声明的是这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（没有域名和公网IP，只在局域网里玩玩），两个服务器程序配合，相当于一个Manager。
 
 ### 1-目录结构
 
@@ -140,7 +158,7 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfa*JFw*ZfYwJ*xSKBh3ff**CiJf0t8QUrlENdN7ot*6xeb9pHi9mWtGs2HIobibyX0!/r"/>
 
-配色不是很搭不要打我，毕竟画16个垃圾桶已经够难为我了，谁能想到还要干美工的活233？
+界面很丑不要打我，毕竟画16个垃圾桶已经够难为我了，谁能想到还要干美工的活233？
 
 这部分比较简单：
 
@@ -148,3 +166,7 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 - index.html是我从百度地图api官网上抄下来的页面代码，没啥东西。
 - map.js是index.html页面的脚本文件，负责发送ajax请求获取allTrashesInfo中的json对象，然后创建一张地图，最后把垃圾桶绑定上click事件放上去，具体见源码。
 - http.js是基于nodejs的一个后端程序，功能很简单，就是前端请求啥发给它啥，没啥大逻辑，几个if-else，具体见源码。
+
+统计代码行数：
+
+git log  --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -

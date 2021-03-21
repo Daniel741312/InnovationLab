@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "mymath.h": "c",
+        "stdio.h": "c",
+        "wrap.h": "c",
+        "tcp_send.h": "c",
+        "iosfwd": "cpp",
+        "fstream": "cpp",
+        "sstream": "cpp"
+    }
+}

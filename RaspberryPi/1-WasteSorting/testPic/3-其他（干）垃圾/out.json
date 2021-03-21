@@ -1,0 +1,636 @@
+镜子3-1.jpeg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296766879596544,
+	"result": [
+		{
+			"keyword": "吸顶灯",
+			"root": "商品-家居家装",
+			"score": 0.97251500000000002
+		},
+		{
+			"keyword": "镜子",
+			"root": "商品-家具",
+			"score": 0.61400399999999999
+		},
+		{
+			"keyword": "浴室镜",
+			"root": "商品-家具",
+			"score": 0.41260400000000003
+		},
+		{
+			"keyword": "书房灯",
+			"root": "商品-灯具",
+			"score": 0.20100599999999999
+		},
+		{
+			"keyword": "过道灯",
+			"root": "商品-灯具",
+			"score": 0.0038149999999999998
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=吸顶灯
+key=7db7bf1a82adb28c86e9892e813df06d&word=镜子
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "旧镜子",
+			"type": 0,
+			"aipre": 0,
+			"explain": "可回收垃圾是指适宜回收、可循环利用的生活废弃物。",
+			"contain": "常见包括各类废金属、玻璃瓶、易拉罐、饮料瓶、塑料玩具、书本、报纸、广告单、纸板箱、衣服、床上用品、电子产品等",
+			"tip": "轻投轻放；清洁干燥，避免污染，费纸尽量平整；立体包装物请清空内容物，清洁后压扁投放；有尖锐边角的、应包裹后投放"
+		},
+		{
+			"name": "镜子",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		}
+	]
+}
+----In the main:type=0----
+
+
+碎玻璃3-2.jpeg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296776262254592,
+	"result": [
+		{
+			"keyword": "白开水",
+			"root": "商品-食物",
+			"score": 0.31068499999999999
+		},
+		{
+			"keyword": "图画",
+			"root": "商品-绘画",
+			"score": 0.23243800000000001
+		},
+		{
+			"keyword": "玻璃杯",
+			"root": "商品-容器",
+			"score": 0.15145700000000001
+		},
+		{
+			"keyword": "玻璃器皿",
+			"root": "商品-容器",
+			"score": 0.079211000000000004
+		},
+		{
+			"keyword": "花卉",
+			"root": "商品-农用物资",
+			"score": 0.0068490000000000001
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=白开水
+key=7db7bf1a82adb28c86e9892e813df06d&word=图画
+key=7db7bf1a82adb28c86e9892e813df06d&word=玻璃杯
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "玻璃杯",
+			"type": 0,
+			"aipre": 0,
+			"explain": "可回收垃圾是指适宜回收、可循环利用的生活废弃物。",
+			"contain": "常见包括各类废金属、玻璃瓶、易拉罐、饮料瓶、塑料玩具、书本、报纸、广告单、纸板箱、衣服、床上用品、电子产品等",
+			"tip": "轻投轻放；清洁干燥，避免污染，费纸尽量平整；立体包装物请清空内容物，清洁后压扁投放；有尖锐边角的、应包裹后投放"
+		},
+		{
+			"name": "玻璃杯子",
+			"type": 0,
+			"aipre": 0,
+			"explain": "可回收垃圾是指适宜回收、可循环利用的生活废弃物。",
+			"contain": "常见包括各类废金属、玻璃瓶、易拉罐、饮料瓶、塑料玩具、书本、报纸、广告单、纸板箱、衣服、床上用品、电子产品等",
+			"tip": "轻投轻放；清洁干燥，避免污染，费纸尽量平整；立体包装物请清空内容物，清洁后压扁投放；有尖锐边角的、应包裹后投放"
+		}
+	]
+}
+----In the main:type=0----
+
+
+烟蒂3-1.jpg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296782851506176,
+	"result": [
+		{
+			"keyword": "烟头",
+			"root": "商品-香烟",
+			"score": 0.652254
+		},
+		{
+			"keyword": "瓶塞",
+			"root": "商品-瓶饮",
+			"score": 0.51138899999999998
+		},
+		{
+			"keyword": "春卷",
+			"root": "商品-食物",
+			"score": 0.370925
+		},
+		{
+			"keyword": "白色背景",
+			"root": "非自然图像-纯色图像",
+			"score": 0.205235
+		},
+		{
+			"keyword": "跳绳",
+			"root": "商品-体育用品",
+			"score": 0.017273
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=烟头
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "湿烟头",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "烟头",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "香烟头",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		}
+	]
+}
+----In the main:type=3----
+
+
+烟蒂3-2.jpeg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296788635451392,
+	"result": [
+		{
+			"keyword": "毛笔",
+			"root": "商品-电脑办公",
+			"score": 0.693913
+		},
+		{
+			"keyword": "木柄",
+			"root": "商品-五金",
+			"score": 0.463642
+		},
+		{
+			"keyword": "雪茄",
+			"root": "商品-包装食品",
+			"score": 0.31416899999999998
+		},
+		{
+			"keyword": "线香",
+			"root": "商品-居家摆件",
+			"score": 0.15728200000000001
+		},
+		{
+			"keyword": "安全带套",
+			"root": "交通工具-汽车",
+			"score": 0.0086390000000000008
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=毛笔
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "毛笔",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "毛笔写过的纸",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		}
+	]
+}
+----In the main:type=3----
+
+
+烟头3-1.jpeg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296794872381440,
+	"result": [
+		{
+			"keyword": "圆珠笔",
+			"root": "商品-电脑办公",
+			"score": 0.43902799999999997
+		},
+		{
+			"keyword": "木柄",
+			"root": "商品-五金",
+			"score": 0.32549
+		},
+		{
+			"keyword": "钢笔",
+			"root": "商品-电脑办公",
+			"score": 0.21462899999999999
+		},
+		{
+			"keyword": "卷笔刀",
+			"root": "商品-文具",
+			"score": 0.10180599999999999
+		},
+		{
+			"keyword": "灯柱",
+			"root": "商品-灯具",
+			"score": 0.0039979999999999998
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=圆珠笔
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "圆珠笔",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "圆珠笔芯",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		}
+	]
+}
+----In the main:type=3----
+
+
+烟头3-2.jpeg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296804095655936,
+	"result": [
+		{
+			"keyword": "虫子",
+			"root": "动物-其他",
+			"score": 0.59205600000000003
+		},
+		{
+			"keyword": "白色背景",
+			"root": "非自然图像-纯色图像",
+			"score": 0.455121
+		},
+		{
+			"keyword": "屏幕截图",
+			"root": "非自然图像-屏幕截图",
+			"score": 0.26534400000000002
+		},
+		{
+			"keyword": "发簪",
+			"root": "商品-首饰",
+			"score": 0.135849
+		},
+		{
+			"keyword": "飞机",
+			"root": "交通工具-飞机",
+			"score": 0.0056499999999999996
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=虫子
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "杀虫子灌",
+			"type": 1,
+			"aipre": 0,
+			"explain": "有毒有害垃圾是指存有对人体健康有害的重金属、有毒的物质或者对环境造成现实危害或者潜在危害的废弃物。",
+			"contain": "常见包括废电池、废荧光灯管、废灯泡、废水银温度计、废油漆桶、过期药品、农药、杀虫剂等。",
+			"tip": "分类投放有害垃圾时，应注意轻放。其中：废灯管等易破损的有害垃圾应连带包装或包裹后投放；废弃药品宜连带包装一并投放；杀虫剂等压力罐装容器，应排空内容物后投放；在公共场所产生有害垃圾且未发现对应收集容器时，应携带至有害垃圾投放点妥善投放。"
+		},
+		{
+			"name": "虫子",
+			"type": 2,
+			"aipre": 0,
+			"explain": "厨余垃圾是指居民日常生活及食品加工、饮食服务、单位供餐等活动中产生的垃圾。",
+			"contain": "常见包括菜叶、剩菜、剩饭、果皮、蛋壳、茶渣、骨头等",
+			"tip": "纯流质的食物垃圾、如牛奶等，应直接倒进下水口。有包装物的湿垃圾应将包装物去除后分类投放、包装物请投放到对应的可回收物或干垃圾容器"
+		}
+	]
+}
+----In the main:type=1----
+
+
+一次性餐盒3-1.jpeg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296810793959424,
+	"result": [
+		{
+			"keyword": "浴缸",
+			"root": "商品-洁具",
+			"score": 0.80871199999999999
+		},
+		{
+			"keyword": "模具",
+			"root": "商品-食物",
+			"score": 0.63622000000000001
+		},
+		{
+			"keyword": "一次性餐具",
+			"root": "商品-厨具/餐具",
+			"score": 0.43973400000000001
+		},
+		{
+			"keyword": "塑料方盘",
+			"root": "商品-容器",
+			"score": 0.25938600000000001
+		},
+		{
+			"keyword": "星盆",
+			"root": "商品-五金",
+			"score": 0.079851000000000005
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=浴缸
+key=7db7bf1a82adb28c86e9892e813df06d&word=模具
+key=7db7bf1a82adb28c86e9892e813df06d&word=一次性餐具
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "一次性餐具",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "一次性餐具包装",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		}
+	]
+}
+----In the main:type=3----
+
+
+一次性餐盒3-2.jpeg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296824509333504,
+	"result": [
+		{
+			"keyword": "碗",
+			"root": "商品-容器",
+			"score": 0.88266100000000003
+		},
+		{
+			"keyword": "纸杯",
+			"root": "商品-容器",
+			"score": 0.59032099999999998
+		},
+		{
+			"keyword": "杯子",
+			"root": "商品-容器",
+			"score": 0.39790700000000001
+		},
+		{
+			"keyword": "马克杯",
+			"root": "商品-容器",
+			"score": 0.20512
+		},
+		{
+			"keyword": "屏幕截图",
+			"root": "非自然图像-屏幕截图",
+			"score": 0.011476
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=碗
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "塑料碗",
+			"type": 0,
+			"aipre": 0,
+			"explain": "可回收垃圾是指适宜回收、可循环利用的生活废弃物。",
+			"contain": "常见包括各类废金属、玻璃瓶、易拉罐、饮料瓶、塑料玩具、书本、报纸、广告单、纸板箱、衣服、床上用品、电子产品等",
+			"tip": "轻投轻放；清洁干燥，避免污染，费纸尽量平整；立体包装物请清空内容物，清洁后压扁投放；有尖锐边角的、应包裹后投放"
+		},
+		{
+			"name": "擦碗布",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "洗碗布",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "洗碗机",
+			"type": 0,
+			"aipre": 0,
+			"explain": "可回收垃圾是指适宜回收、可循环利用的生活废弃物。",
+			"contain": "常见包括各类废金属、玻璃瓶、易拉罐、饮料瓶、塑料玩具、书本、报纸、广告单、纸板箱、衣服、床上用品、电子产品等",
+			"tip": "轻投轻放；清洁干燥，避免污染，费纸尽量平整；立体包装物请清空内容物，清洁后压扁投放；有尖锐边角的、应包裹后投放"
+		},
+		{
+			"name": "碎碗",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "碎碗片",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "陶瓷碗碟",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		}
+	]
+}
+----In the main:type=0----
+
+
+圆珠笔3-1.jpg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296835691347968,
+	"result": [
+		{
+			"keyword": "派克笔",
+			"root": "商品-文具",
+			"score": 0.91044800000000004
+		},
+		{
+			"keyword": "钢笔",
+			"root": "商品-电脑办公",
+			"score": 0.72001199999999999
+		},
+		{
+			"keyword": "笔",
+			"root": "商品-文具",
+			"score": 0.52672699999999995
+		},
+		{
+			"keyword": "圆珠笔",
+			"root": "商品-电脑办公",
+			"score": 0.339563
+		},
+		{
+			"keyword": "墨水笔",
+			"root": "商品-文具",
+			"score": 0.109796
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=派克笔
+key=7db7bf1a82adb28c86e9892e813df06d&word=钢笔
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "钢笔",
+			"type": 0,
+			"aipre": 1,
+			"explain": "可回收垃圾是指适宜回收、可循环利用的生活废弃物。",
+			"contain": "常见包括各类废金属、玻璃瓶、易拉罐、饮料瓶、塑料玩具、书本、报纸、广告单、纸板箱、衣服、床上用品、电子产品等",
+			"tip": "轻投轻放；清洁干燥，避免污染，费纸尽量平整；立体包装物请清空内容物，清洁后压扁投放；有尖锐边角的、应包裹后投放"
+		}
+	]
+}
+----In the main:type=0----
+
+
+圆珠笔3-2.jpg:
+In getGarbageNameByImage,Json returnd from BaiduAI: {
+	"error_code": null,
+	"log_id": 1371296846906916864,
+	"result": [
+		{
+			"keyword": "圆珠笔",
+			"root": "商品-电脑办公",
+			"score": 0.84557199999999999
+		},
+		{
+			"keyword": "自动笔",
+			"root": "商品-文具",
+			"score": 0.56903400000000004
+		},
+		{
+			"keyword": "钢笔",
+			"root": "商品-电脑办公",
+			"score": 0.36492799999999997
+		},
+		{
+			"keyword": "书写工具",
+			"root": "商品-文具",
+			"score": 0.19122500000000001
+		},
+		{
+			"keyword": "触摸笔",
+			"root": "商品-文具",
+			"score": 0.015793999999999999
+		}
+	],
+	"result_num": 5
+}
+key=7db7bf1a82adb28c86e9892e813df06d&word=圆珠笔
+In getGarbageCategoryByNames,Json returnd from Tianapi: {
+	"code": 200,
+	"msg": "success",
+	"newslist": [
+		{
+			"name": "圆珠笔",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		},
+		{
+			"name": "圆珠笔芯",
+			"type": 3,
+			"aipre": 0,
+			"explain": "干垃圾即其它垃圾，指除可回收物、有害垃圾、厨余垃圾（湿垃圾）以外的其它生活废弃物。",
+			"contain": "常见包括砖瓦陶瓷、渣土、卫生间废纸、猫砂、污损塑料、毛发、硬壳、一次性制品、灰土、瓷器碎片等难以回收的废弃物",
+			"tip": "尽量沥干水分；难以辨识类别的生活垃圾都可以投入干垃圾容器内"
+		}
+	]
+}
+----In the main:type=3----
+
+

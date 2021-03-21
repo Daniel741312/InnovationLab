@@ -1,0 +1,38 @@
+[
+   {
+      "id" : 0,
+      "location" : [ 120.3502, 30.3202 ],
+      "recyleBitMap" : 0,
+      "usage" : [ 1, 0, 1, 0 ]
+   },
+   {
+      "id" : 1,
+      "location" : [ 120.3502, 30.3202 ],
+      "recyleBitMap" : 0,
+      "usage" : [ 1, 0, 1, 0 ]
+   },
+   {
+      "id" : 2,
+      "location" : [ 120.3502, 30.3202 ],
+      "recyleBitMap" : 0,
+      "usage" : [ 1, 1, 1, 0.25 ]
+   },
+   {
+      "id" : 3,
+      "location" : [ 120.3498, 30.319900000000001 ],
+      "recyleBitMap" : 8,
+      "usage" : [ 1, 0, 0.5, 0.25 ]
+   },
+   {
+      "id" : 4,
+      "location" : [ 120.351, 30.319199999999999 ],
+      "recyleBitMap" : 8,
+      "usage" : [ 1, 0.25, 0.5, 0.75 ]
+   },
+   {
+      "id" : 5,
+      "location" : [ 120.3502, 30.32 ],
+      "recyleBitMap" : 9,
+      "usage" : [ 1, 0.5, 0.25, 1 ]
+   }
+]

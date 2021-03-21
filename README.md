@@ -4,7 +4,7 @@
 
 请注意引脚有不同的编码方式，由于我主要用的C语言，所以用的WiringPi库，故应该使用WiringPi下的编码。
 
-<img src="./Pic/RaspberryGPIO.png" alt="image-20210316125040457" />
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mce2u21c3eM.cSyXw.s9yquInY3T2DoaoT*nw0M.I56NU3yQAjdIf1daj6bcJjG2R.rKPUmHSY0607DEoCKLFaCQ!/r" style="zoom:80%;" />
 
 
 
@@ -34,9 +34,13 @@ libcurl：这是一个可以发送很多网络请求的C库，利用它可以发
 
 安装方法：https://blog.csdn.net/simonyucsdy/article/details/82835268；
 
-头文件目录：<img src="./Pic/image-20210316125040457.png" alt="image-20210316125040457" />
+头文件目录：
 
-动态库目录：<img src="./Pic/image-20210316125210374.png" alt="image-20210316125210374" />
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfaWL8Hn1pKHNPGTafFqXu9HMY9deIPaW5LlP032PuwQlcNLGQ0VRNtE1TrgJFBiFf0!/r" align="left"/>
+
+动态库目录：
+
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfaHslxq4faTN4yyGn9wdCKW2q764ohSU1E0lCzklEzjboZSe7TNcAQ1gBGTPV7iR.8!/r" align="left"/>
 
 关于如何使用curl库，这里有详细的视频教程：https://www.bilibili.com/video/BV1o7411w75c
 
@@ -46,9 +50,15 @@ jsoncpp库：这是用C++编写的json库，可以用它来解析json字符串�
 
 安装方法：直接命令`sudo apt-get install libjsoncpp-dev`
 
-头文件目录：<img src="./Pic/image-20210316125607622.png" alt="image-20210316125607622"/>
+头文件目录：
 
-动态库目录：<img src="./Pic/image-20210316125843844.png" alt="image-20210316125843844"/>
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2H679HyocvIkCFInejJtyhkcp*jWRtKzKG4p5ZCX4J*YuBpxvIYG1tEGZta9yCW99U!/r" align="left"/>
+
+动态库目录：<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2Hn37FYb8kBfij2w6hvRYjZ.tvoKVl*oYlzAKjGmr.VR3whq.jYHmIwIfCCExSUJBI!/r" align="left"/>
+
+
+
+
 
 他这个BaiduAI提供的SDK中json头文件引用的目录是错的，他直接`#include<json/json.h>`，少了一层jsoncpp，前面都加上就好了。顺便提醒你gcc的头文件搜索顺序：
 
@@ -67,7 +77,13 @@ openssl库：负责https的吧，跟安全有关，安装就完事了；
 
 安装方法：https://www.cnblogs.com/Yogile/p/12914741.html，应该也是一条命令搞定；
 
-头文件目录：<img src="./Pic/image-20210316160632198.png" alt="image-20210316160632198"/>
+头文件目录：<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2F4LoocHbggT4mZKbtuAGjusy*BJavicduEi85phvJyy67gOloZVQEMUAdLAlpOiXo!/r" align="left"/>
+
+
+
+
+
+
 
 #### 3-图像识别部分源码
 
@@ -79,7 +95,7 @@ openssl库：负责https的吧，跟安全有关，安装就完事了；
 
 ### 1-目录结构
 
-<img src="./Pic/image-20210321115529693.png" alt="image-20210321115529693"/>
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mce2u21c3eM.cSyXw.s9yquKV57frV95cx*dnDlAhQ9NnHLBeQG7TklWQaSh4rGDIvsLcdgVt7p1.gLeI2ZwSImU!/r"/>
 
 ### 2-目录中各个文件作用
 
@@ -114,7 +130,7 @@ openssl库：负责https的吧，跟安全有关，安装就完事了；
 
 这是一个提供给管理者或者用户的Web服务器，用于在地图上展示垃圾桶的使用情况，效果如下：
 
-<img src="./Pic/2021-03-21 12-34-47 的屏幕截图.png"/>
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfa*JFw*ZfYwJ*xSKBh3ff**CiJf0t8QUrlENdN7ot*6xeb9pHi9mWtGs2HIobibyX0!/r"/>
 
 配色不是很搭不要打我，毕竟画16个垃圾桶已经够难为我了，谁能想到还要干美工的活233？
 

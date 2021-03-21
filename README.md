@@ -38,9 +38,13 @@ libcurl：这是一个可以发送很多网络请求的C库，利用它可以发
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfaWL8Hn1pKHNPGTafFqXu9HMY9deIPaW5LlP032PuwQlcNLGQ0VRNtE1TrgJFBiFf0!/r" align="left"/>
 
+
+
 动态库目录：
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfaHslxq4faTN4yyGn9wdCKW2q764ohSU1E0lCzklEzjboZSe7TNcAQ1gBGTPV7iR.8!/r" align="left"/>
+
+
 
 关于如何使用curl库，这里有详细的视频教程：https://www.bilibili.com/video/BV1o7411w75c
 
@@ -53,6 +57,8 @@ jsoncpp库：这是用C++编写的json库，可以用它来解析json字符串�
 头文件目录：
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2H679HyocvIkCFInejJtyhkcp*jWRtKzKG4p5ZCX4J*YuBpxvIYG1tEGZta9yCW99U!/r" align="left"/>
+
+
 
 动态库目录：<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2Hn37FYb8kBfij2w6hvRYjZ.tvoKVl*oYlzAKjGmr.VR3whq.jYHmIwIfCCExSUJBI!/r" align="left"/>
 

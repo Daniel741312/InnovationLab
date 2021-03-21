@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "udp_send.h": "c",
+        "tcp_send.h": "c",
+        "inet.h": "c"
+    }
+}

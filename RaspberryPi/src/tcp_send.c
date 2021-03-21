@@ -4,6 +4,7 @@ int sendInfoByTCP(const char* str,size_t length){
 	int cnt=10;
 	int num=0;
 	char serverRet[16];
+	memset(serverRet,0,16);
 
 	/*服务器端地址结构*/
 	int serverIP=0;
@@ -24,7 +25,7 @@ int sendInfoByTCP(const char* str,size_t length){
 	int ret=0;
 	ret=connect(clientFd,(const struct sockaddr*)&serverAddr,sizeof(serverAddr));
 	if(ret==-1){
-		perror("connect error\n");
+		perror("connect error");
 		return -1;
 	}
 
@@ -32,7 +33,6 @@ int sendInfoByTCP(const char* str,size_t length){
 	write(clientFd,str,length);
 	read(clientFd,serverRet,sizeof(serverRet));
 	if(strcmp(serverRet,"OK")!=0){
-		write(2,"server reports an error\n",25);
 		return -1;
 	}
 

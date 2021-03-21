@@ -25,9 +25,10 @@ static void* do_work(void* arg){
 	/*发回给客户端的信息*/
 	const char* serverRet="OK";
 
-	read(ts->connectFd,item,MAXLEN);
+	int n=read(ts->connectFd,item,MAXLEN);
 	//printf("Recive from %s at port %d\n",inet_ntop(AF_INET,&((ts->clientAddr).sin_addr),str,sizeof(str)),ntohs((ts->clientAddr).sin_port));
 	write(ts->connectFd,serverRet,2);
+	printf("item:%s\n",item);
 	//write(STDOUT_FILENO,item,n);
 
 	std::ifstream trashInfoR("../allTrashesInfo.json",std::ios::binary);

@@ -1,4 +1,12 @@
+#include "../aip-cpp-sdk-0.8.5/image_classify.h"
 #include "../include/waste_sorting.hpp"
+
+//提供垃圾分类查询的接口：https://www.tianapi.com/apiview/97
+std::string url="http://api.tianapi.com/txapi/lajifenlei/index";
+
+//POST请求携带的数据，key是我在平台上的密钥，wrod是查询的物体名，也就是需要拼接上的传入的参数objectNames[i]
+std::string postData0="key=7db7bf1a82adb28c86e9892e813df06d&word=";
+
 
 int getGarbageNamesByImage(const char* fileName,std::vector<std::string>* objectNames){
 

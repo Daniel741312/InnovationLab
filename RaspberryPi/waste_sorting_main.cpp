@@ -1,4 +1,4 @@
-#include "include/waste_sorting.hpp"
+#include "waste_sorting.hpp"
 
 int main(int argc,char* argv[]){
 

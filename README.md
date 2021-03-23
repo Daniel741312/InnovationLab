@@ -1,10 +1,8 @@
 # 创新实验的详细记录
 
-## 一、树莓派引脚图
+## 一、系统示意图
 
-请注意引脚有不同的编码方式，由于我主要用的C语言，所以用的WiringPi库，故应该使用WiringPi下的编码。
-
-<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mce2u21c3eM.cSyXw.s9yquInY3T2DoaoT*nw0M.I56NU3yQAjdIf1daj6bcJjG2R.rKPUmHSY0607DEoCKLFaCQ!/r" style="zoom:80%;" />
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcVk.a9Ymhj7gT9uGbzwCL.ruUjbBSI8HMM54mpufW697Zwg9dANI7ngW98CGFgCCX91gNHdRDvUcQFfTPMJoUE0!/r"/>
 
 
 
@@ -115,9 +113,9 @@ sudo make install
 
 
 
-## n、服务器端部分
+## 四、服务端部分
 
-首先需要声明的是这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（没有域名和公网IP，只在局域网里玩玩），两个服务器程序配合，相当于一个Manager。
+这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（我没有域名和公网IP，只在局域网里玩玩），两个服务器程序配合：TCPServer接受来自树莓派的封装了垃圾桶最新信息的报文，将其解析为json对象，并写入到`allTrashesInfo.json`文件中去；WebServer负责向用户在地图上展示垃圾桶的位置和usage以及是否已满，其实基本上就是把<a href="http://lbsyun.baidu.com/">百度地图api</a>提供的示例代码改一改，很简单。
 
 ### 1-目录结构
 
@@ -127,7 +125,7 @@ sudo make install
 
 #### 1-allTrashesInfo.json
 
-这个文件存储了一个json数组，里面的每个对象都包装了一个垃圾桶的信息，格式是这样的：
+这个文件存储了一个json数组（对象），里面的每个对象都包装了一个垃圾桶的信息，格式是这样的：
 
 ```json
    {
@@ -163,10 +161,16 @@ sudo make install
 这部分比较简单：
 
 - img目录存放了一个favicon.ico图标和16张垃圾桶的图片。在地图上显示不同subtrash满的原理就是bitmap，上面提到过，4个binary位从高到低分别是“可回收（蓝色）”，“有害（红色）”，“厨余（绿色）”，“其他（黄色）”。比如说都没满就是0H（0D，0000B），表现在图上就是四个空条；都满了就是FH（16D，1111B），表现在图上就是“蓝红绿黄”四个条；厨余垃圾和有害满了就是6H（6D，0110B），表现在图上就是红条和绿条，以此类推。
-- index.html是主页代码，没啥东西，直接复制粘贴示例。
+- index.html是主页代码，没啥东西，直接复制粘贴百度给的示例。
 - map.js是index.html页面的脚本文件，主要负责发送ajax请求获取allTrashesInfo中的json对象，然后创建一张地图，最后根据allTrashInfo中的垃圾桶信息挑选合适的垃圾桶图标绑定上click事件放地图上去，具体见源码。
 - http.js是基于nodejs的一个后端程序，功能很简单，就是前端请求啥发给它啥，没啥大逻辑，几个if-else，具体见源码。
 
-统计代码行数：
+### 3-服务端源码
 
-git log  --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -
+https://github.com/Daniel741312/InnovationLab/tree/master/Servers
+
+## 五、树莓派引脚图
+
+请注意引脚有不同的编码方式，由于我主要用的C语言，所以用的WiringPi库，故应该使用WiringPi下的编码。
+
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mce2u21c3eM.cSyXw.s9yquInY3T2DoaoT*nw0M.I56NU3yQAjdIf1daj6bcJjG2R.rKPUmHSY0607DEoCKLFaCQ!/r" style="zoom:80%;" />

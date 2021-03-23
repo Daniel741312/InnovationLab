@@ -1,5 +1,5 @@
-#ifndef __WASTE_SORTING_H__
-#define __WASTE_SORTING_H__
+#ifndef __WASTE_SORTING_HPP__
+#define __WASTE_SORTING_HPP__
 
 #include <vector>
 #include <string>

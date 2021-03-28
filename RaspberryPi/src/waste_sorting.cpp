@@ -27,11 +27,12 @@ int getGarbageNamesByImage(const char* fileName,std::vector<std::string>* object
 
     /*gcc动态的向源码中注入宏：gcc -DMACRONAME=MACRODEF*/
 #ifdef TEST
-	std::cout<<fileName<<":\n"<<"In getGarbageNameByImage,Json returnd from BaiduAI:\n"<<classifyResult<<std::endl;
+	std::cout<<fileName<<":\n"<<"In getGarbageNameByImage,Json returnd from BaiduAI:\n"<<classifyResult<<"\n"<<std::endl;
 #endif
 
 	/*检查是否出错，如果error_code字段为null，则出错*/
 	if(classifyResult["error_code"].asInt()!=0){
+		std::cerr<<"BaiduAI reports an error\n"<<std::endl;
 		return -1;
 	}
 

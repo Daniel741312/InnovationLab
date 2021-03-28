@@ -42,10 +42,10 @@ float disMeasure(void){
 	while(digitalRead(Echo) != 0);  
 	gettimeofday(&tv2, NULL);
 
-	start = tv1.tv_sec * 1000000 + tv1.tv_usec;   //微秒级的时间  
+	start = tv1.tv_sec * 1000000 + tv1.tv_usec;
 	stop  = tv2.tv_sec * 1000000 + tv2.tv_usec;  
 
-	dis = (float)(stop - start) / 1000000 * 34000 / 2;  //求出距离  
+	dis = (float)(stop - start) / 1000000 * 34000 / 2;
 
 	return dis;  
 }  

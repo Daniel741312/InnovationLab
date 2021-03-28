@@ -1,8 +1,6 @@
 #include "../include/tcp_send.h"
 
 int sendInfoByTCP(const char* str,size_t length){
-	int cnt=10;
-	int num=0;
 	char serverRet[16];
 	memset(serverRet,0,16);
 
@@ -33,6 +31,7 @@ int sendInfoByTCP(const char* str,size_t length){
 	write(clientFd,str,length);
 	read(clientFd,serverRet,sizeof(serverRet));
 	if(strcmp(serverRet,"OK")!=0){
+		write(STDERR_FILENO,serverRet,strlen(serverRet));
 		return -1;
 	}
 

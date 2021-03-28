@@ -1,5 +1,5 @@
 #include "../aip-cpp-sdk-0.8.5/image_classify.h"
-#include "../include/waste_sorting.hpp"
+#include "../include/waste_sorting.h"
 
 //提供垃圾分类查询的接口：https://www.tianapi.com/apiview/97
 std::string url="http://api.tianapi.com/txapi/lajifenlei/index";

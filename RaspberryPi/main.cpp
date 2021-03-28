@@ -1,6 +1,6 @@
 #include "tcp_send.h"
 #include "ultrasonic_ranging.h"
-#include "waste_sorting.hpp"
+#include "waste_sorting.h"
 
 /*现在main函数充当测试的作用吧*/
 
@@ -11,8 +11,8 @@ static void waste_sorting_test(int argc,char* argv[]);
 int main(int argc, char* argv[]){
     int n=argc;
     char** strv=argv;
-    tcp_send_test("{\"id\":6,\"recyleBitMap\":14,\"location\":[120.3532, 30.3242],\"usage\":[0.9, 1, 1, 0.5]}");
-    ultrasonic_ranging_test();
+    //tcp_send_test("{\"id\":6,\"recyleBitMap\":14,\"location\":[120.3532, 30.3242],\"usage\":[0.9, 1, 1, 0.5]}");
+    //ultrasonic_ranging_test();
     waste_sorting_test(n,strv);
 
     return 0;
@@ -30,7 +30,7 @@ static void ultrasonic_ranging_test(){
 
     if (wiringPiSetup() == -1){
         printf("setup wiringPi failed !\n");
-        return 1;
+        return;
     }
 
     ultraInit();
@@ -65,6 +65,6 @@ static void waste_sorting_test(int argc,char* argv[]){
 	}
 
 	delete(objectNames);
-	return 0;
+	return;
 
 }

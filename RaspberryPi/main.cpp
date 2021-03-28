@@ -10,7 +10,7 @@ static void waste_sorting_test(int argc,char* argv[]);
 
 int main(int argc, char* argv[]){
     int n=argc;
-    const char** strv=argv;
+    char** strv=argv;
     waste_sorting_test(n,strv);
 
     const char* str = "{\"id\":6,\"recyleBitMap\":14,\"location\":[120.3532, 30.3242],\"usage\":[0.9, 1, 1, 0.5]}";
@@ -47,15 +47,14 @@ static void ultrasonic_ranging_test(){
     return;
 }
 
-static void waste_sorting_test(int n,const char** strv){
+static void waste_sorting_test(int n,char** strv){
 
     std::vector<std::string>* objectNames=new std::vector<std::string>();
 	int type=0;
-	int ret=0;
 
 	for(int i=1;i<n;++i){
 		/*从main函数参数中获取图片文件路径*/
-		ret=getGarbageNamesByImage(strv[i],objectNames);
+		getGarbageNamesByImage(strv[i],objectNames);
 
 		type=getGarbageCategoryByNames(objectNames);
 		std::cout<<"----In the waste_sorting:type="<<type<<"----\n\n"<<std::endl;

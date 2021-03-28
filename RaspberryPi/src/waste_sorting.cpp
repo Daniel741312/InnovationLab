@@ -7,6 +7,16 @@ std::string url="http://api.tianapi.com/txapi/lajifenlei/index";
 //POST请求携带的数据，key是我在平台上的密钥，wrod是查询的物体名，也就是需要拼接上的传入的参数objectNames[i]
 std::string postData0="key=7db7bf1a82adb28c86e9892e813df06d&word=";
 
+static int writer(char* data, size_t size, size_t nmemb, std::string* writer_data){ 
+	/*写入多少字节*/
+	unsigned long sizes = size * nmemb;
+	if (NULL == writer_data){  
+		return 0;
+	}  
+	writer_data->append(data, sizes);
+	return sizes;
+}
+
 int getGarbageNamesByImage(const char* fileName,std::vector<std::string>* objectNames){
 
 	/*设置APPID和密钥*/
@@ -125,12 +135,3 @@ int getGarbageCategoryByNames(std::vector<std::string>* objectNames){
 	return garbageCategogry;
 }
 
-static int writer(char* data, size_t size, size_t nmemb, std::string* writer_data){ 
-	/*写入多少字节*/
-	unsigned long sizes = size * nmemb;
-	if (NULL == writer_data){  
-		return 0;
-	}  
-	writer_data->append(data, sizes);
-	return sizes;
-}

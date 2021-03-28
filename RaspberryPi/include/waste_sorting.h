@@ -23,6 +23,5 @@ int getGarbageNamesByImage(const char *fileName, std::vector<std::string> *objec
    size_t write_callback(char* ptr, size_t size, size_t nmemb, void* userdata);
    会将服务器返回的json字符串ptr写到泛型指针userdata所指向的缓冲区中去（这里用字符串）
 */
-static int writer(char *data, size_t size, size_t nmemb, std::string *writer_data);
 
 #endif

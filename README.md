@@ -6,11 +6,103 @@
 
 
 
-## 二、图像识别部分
+## 二、树莓派与外设的连接和驱动
+
+
+
+### 1-相机模块的安装和使用
+
+
+
+### 2-光敏电阻触发开关的安装和使用
+
+
+
+### 3-电机控制模块的安装和使用
+
+
+
+### 4-超声波测距模块HC-SR04的安装和使用
+
+
+
+
+
+## 三、图像识别部分
 
 ### 1-实现思路概述
 
-When it comes to 图像识别，首先想到的肯定是深度学习，但是我并不会，只懂个其中的皮毛，所以采用了一种更为简单的解决方案：采用<a href="https://ai.baidu.com">BaiduAI开放平台</a>提供的图像识别接口同时配合<a href="https://www.tianapi.com/">天行数据</a>提供的垃圾分类查询接口实现图像识别并分类。因此这部分的功能就是读入一张垃圾的图片，输出它属于什么垃圾（用整数表示）。
+When it comes to 图像识别，首先想到的肯定是深度学习，但是我并不会，只懂个其中的皮毛，所以采用了一种更为简单的解决方案：使用<a href="https://ai.baidu.com">BaiduAI开放平台</a>提供的图像识别接口同时配合<a href="https://www.tianapi.com/">天行数据</a>提供的垃圾分类查询接口实现图像识别并分类（干啥啥不行，调用api第一名）。因此这部分的功能就是读入一张垃圾的图片，输出它属于什么垃圾（用一个整数表示）。
+
+代码实现在`waste_sorting.cpp`文件中，下面结合头文件`waste_sorting.h`中的函数声明简单说明其原理：
+
+```cpp
+#ifndef __WASTE_SORTING_H__
+#define __WASTE_SORTING_H__
+
+#include <vector>
+#include <string>
+#include <iostream>
+
+/*
+   获取垃圾类型的函数：传入识别出来的物体种类（包含所有可能结果的string数组），返回其中最有可能所属的垃圾类型，约定垃圾类型如下：
+
+   0-可回收
+   1-有害
+   2-厨余(湿)
+   3-其他(干)
+
+   -1表示出错，并打印到stderr中
+*/
+int getGarbageCategoryByNames(std::vector<std::string>* objectNames);
+int getGarbageNamesByImage(const char* fileName, std::vector<std::string>* objectNames);
+
+#endif
+```
+
+函数`getGarbageNamesByImage`的第一个参数`fileName`是图片的文件名，这个函数会调用BaiduAI的图像识别SDK中的`aip::Imageclassify`类下的`advanced_general`方法来获取图像中的物体类型，返回结果是一个JSON对象，格式如下（我输入了一张蓄电池的图片）：
+
+```json
+{
+	"error_code" : null,
+	"log_id" : 1376707039807406080,
+	"result" : 
+	[
+		{
+			"keyword" : "蓄电池",
+			"root" : "商品-电子原器件",
+			"score" : 0.82018500000000005
+		},
+		{
+			"keyword" : "车载电源",
+			"root" : "商品-机器设备",
+			"score" : 0.58906800000000004
+		},
+		{
+			"keyword" : "包装袋/盒",
+			"root" : "非自然图像-图像素材",
+			"score" : 0.38386300000000001
+		},
+		{
+			"keyword" : "冷冻油",
+			"root" : "商品-原材料",
+			"score" : 0.2089
+		},
+		{
+			"keyword" : "电能表",
+			"root" : "商品-仪表",
+			"score" : 0.039449999999999999
+		}
+	],
+	"result_num" : 5
+}
+```
+
+相关字段含义应该很清楚，可参阅api文档。
+
+接下来解析这个JSON对象，拿到所有的"keyword"（实验中发现"score"最高结果的也可能是错的，出于容错性的考虑，所有的"keyword"都带走），存到第二个参数`objectNames`指向的一个字符串数组中去（这个指针是一个传出参数，由函数调用者维护）。这样函数调用者就能拿到图片中物体的所有可能类型了。
+
+接下来将`objectNames`传给函数`getGarbageCategoryByNames`，它会将其中的每个字符串一一取出，写到post请求的参数中去，然后逐一向天行数据api发送HTTPpost请求查询这个物体的垃圾类型，一旦查询成功，就break，返回垃圾类型。四种垃圾类型用四个整数表示，映射关系在上面的注释里。
 
 ### 2-BaiduAI开放平台的使用
 
@@ -24,9 +116,9 @@ When it comes to 图像识别，首先想到的肯定是深度学习，但是我
 
 #### 2.安装相关的库
 
-首先声明，如果在本地机器（Ubuntu18.04）上能够安装好并跑通的库在树莓派上不能用，还找不到正确的原因，直接重装树莓派最新的系统。我当时编译文件时一直报错Json库下的一个什么函数是未定义的引用，动态链接器报的错，我查了半天确认了相关目录下有`libjsoncpp`动态库，但是g++死活找不到，一气之下直接重装系统，一次编译运行成功。
+先吐槽一下，我在本地机器上（Ubuntu18.04）明明能够跑通，但是在树莓派（Debian）却跑不通，编译文件时一直报错Json库下的一个什么函数是什么未定义的引用，动态链接器报的错，我查了半天确认了相关目录下有`libjsoncpp`动态库，但是g++死活找不到，一气之下直接重装系统，一次编译运行成功（重启能解决99%的问题，重装系统能解决100%的问题，甚至还可能把有问题的人解决掉）。
 
-言归正传，下面安装这三个库：
+言归正传，下面记录这三个库的安装：
 
 ###### libcurl库
 
@@ -78,7 +170,7 @@ sudo make install
 
 
 
-有一说一，他这个BaiduAI提供的SDK中json头文件引用的目录是错的，他直接`#include<json/json.h>`，少了一层jsoncpp，在前面都加上就好了。顺便提醒你gcc的头文件搜索顺序：
+有一说一，他这个BaiduAI提供的SDK中json头文件引用的目录是错的，他直接`#include<json/json.h>`，少了一层jsoncpp，在前面都加上就好了。顺便记录一下gcc的头文件搜索顺序：
 
 - 由参数-I指定的路径(指定路径有多个路径时，按指定路径的顺序搜索)
 - 然后找gcc的环境变量 C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, OBJC_INCLUDE_PATH
@@ -95,9 +187,13 @@ sudo make install
 
 负责https的吧，跟安全有关，安装就完事了；
 
-安装方法：https://www.cnblogs.com/Yogile/p/12914741.html
+安装方法：
 
-应该也是一条命令搞定；
+```bash
+sudo apt-get install openssl
+
+sudo apt-get install libssl-dev
+```
 
 头文件目录：<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcRqE0kWwQAq2brZ63uQun2F4LoocHbggT4mZKbtuAGjusy*BJavicduEi85phvJyy67gOloZVQEMUAdLAlpOiXo!/r" align="left"/>
 
@@ -111,11 +207,9 @@ sudo make install
 
 
 
-
-
 ## 四、服务端部分
 
-这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（我没有域名和公网IP，只在局域网里玩玩），两个服务器程序配合：TCPServer接受来自树莓派的封装了垃圾桶最新信息的报文，将其解析为json对象，并写入到`allTrashesInfo.json`文件中去；WebServer负责向用户在地图上展示垃圾桶的位置和usage以及是否已满，其实基本上就是把<a href="http://lbsyun.baidu.com/">百度地图api</a>提供的示例代码改一改，很简单。
+这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（我没有域名和公网IP，只在局域网里玩玩），两个服务器程序配合：TCPServer接受来自树莓派的封装了垃圾桶最新信息的报文，将其解析为JSON对象，并写入到`allTrashesInfo.json`文件中去；WebServer负责向用户在地图上展示垃圾桶的位置和usage以及是否已满，其实基本上就是把<a href="http://lbsyun.baidu.com/">百度地图api</a>提供的示例代码改一改，很简单。
 
 ### 1-目录结构
 

@@ -1,4 +1,4 @@
-#include "../include/ultrasonic_ranging.h"
+#include "ultrasonic_ranging.h"
 
 #define Trig    0  
 #define Echo    1  

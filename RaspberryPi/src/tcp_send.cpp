@@ -1,4 +1,4 @@
-#include "../include/tcp_send.h"
+#include "tcp_send.h"
 
 int sendInfoByTCP(const char* str,size_t length){
 	char serverRet[16];

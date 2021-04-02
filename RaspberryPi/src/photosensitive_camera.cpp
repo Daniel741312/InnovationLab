@@ -1,4 +1,5 @@
 #include <../include/photosensitive_camera.h>
+
 int waitForMyPic(void){
 	if(wiringPiSetup()==-1){
 		printf("setup wirginPi failed!\n");
@@ -21,8 +22,8 @@ int waitForMyPic(void){
 	}
 
 	if(ret==0){
-		char* execv_arg[]={"raspistill","-o","garbage.jpg","-t","100",NULL};
-		if(execv("/usr/bin/raspistill",execv_arg)<0){
+		//char* execv_arg[]={"raspistill","-o","garbage.jpg","-t","100",NULL};
+		if(execl("/usr/bin/raspistill","raspistill","-o","garbage.jpg","-t","100",NULL)<0){
 			perror("execv error");
 			exit(0);
 		}
@@ -33,3 +34,4 @@ int waitForMyPic(void){
 
 	return 0;
 }
+

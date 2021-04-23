@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <json/jsoncpp.h>
+#include <jsoncpp/json/json.h>
 
 /*
    获取垃圾类型的函数：传入识别出来的物体种类（包含所有可能结果的string数组），返回其中最有可能所属的垃圾类型，约定垃圾类型如下：

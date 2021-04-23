@@ -7,7 +7,7 @@
 int ultraInit(void){  
 	if(-1 == wiringPiSetup()){
 		std::cerr<<"Setup wiringPi failed"<<std::endl;
-		return -1
+		return -1;
 	}
 	pinMode(ECHO, INPUT);  
 	pinMode(TRIG, OUTPUT);  

@@ -1,5 +1,6 @@
-#include "stepmotor.h"
+#include "step_motor.h"
 
+/*原来的那个函数，可能会有用*/
 #if 0 
 static void setStep(int a, int b, int c, int d){
 	digitalWrite(IN1, a);	
@@ -43,12 +44,12 @@ void backward(int steps){
 	return;
 }
 
-int initial(void){
+int motorInit(void){
 	if (-1 == wiringPiSetup()) {
-		printf("Setup wiringPi failed!\n");
+		std::cerr<<"Setup wiringPi failed"<<std::endl;
 		return -1;
 	}
-	/* set mode to output */
+	/*设置四个引脚为输出模式*/
 	pinMode(IN1, OUTPUT);
 	pinMode(IN2, OUTPUT);
 	pinMode(IN3, OUTPUT);

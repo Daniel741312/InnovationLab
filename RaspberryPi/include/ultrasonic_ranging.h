@@ -2,10 +2,10 @@
 #define __ULTRASONIC_RANGING_H__
 
 #include <wiringPi.h>
-#include <stdio.h>
+#include <iostream>
 #include <sys/time.h>
 
-void ultraInit(void);
+int ultraInit(void);
 float disMeasure(void);
 
 #endif

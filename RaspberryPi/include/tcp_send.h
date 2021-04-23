@@ -19,6 +19,6 @@
     *我负责跟Server建立TCP连接并发送过去
     *成功返回0失败返回-1
 */
-int sendInfoByTCP(const char *str, size_t length);
+int sendInfoByTCP(const char* str, size_t length);
 
 #endif

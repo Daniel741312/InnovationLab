@@ -4,8 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-
-int getGarbageNamesByImage(const char* fileName, std::vector<std::string> *objectNames);
+#include <json/jsoncpp.h>
 
 /*
    获取垃圾类型的函数：传入识别出来的物体种类（包含所有可能结果的string数组），返回其中最有可能所属的垃圾类型，约定垃圾类型如下：
@@ -18,5 +17,6 @@ int getGarbageNamesByImage(const char* fileName, std::vector<std::string> *objec
    -1表示出错，并打印到stderr中
 */
 int getGarbageCategoryByNames(std::vector<std::string> *objectNames);
+int getGarbageNamesByImage(const char* fileName, std::vector<std::string> *objectNames);
 
 #endif

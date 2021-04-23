@@ -6,8 +6,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-/*Digtal out from photosensitive sensor*/
-#define DO 2
+/*光敏模块的数字逻辑输出端DO接树莓派21号引脚*/
+#define DO 21
 
 int waitForMyPic(void);
 

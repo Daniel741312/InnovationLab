@@ -57,7 +57,6 @@ int getGarbageNamesByImage(const char* fileName,std::vector<std::string>* object
 	return 0;
 }
 
-
 int getGarbageCategoryByNames(std::vector<std::string>* objectNames){
 	/*创建一个curl句柄*/
 	CURL* curl=NULL;
@@ -134,4 +133,3 @@ int getGarbageCategoryByNames(std::vector<std::string>* objectNames){
 	curl_easy_cleanup(curl);
 	return garbageCategogry;
 }
-

@@ -27,7 +27,7 @@ int sendInfoByTCP(const char* str,size_t length){
 		return -1;
 	}
 
-	/*业务逻辑*/
+	/*将字符串写过去，并读出返回值*/
 	write(clientFd,str,length);
 	read(clientFd,serverRet,sizeof(serverRet));
 	if(strcmp(serverRet,"OK")!=0){

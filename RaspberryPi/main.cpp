@@ -2,10 +2,13 @@
 #include "ultrasonic_ranging.h"
 #include "waste_sorting.h"
 #include "photosensitive_camera.h"
+#include "step_motor.h"
+#include <stdio.h>
 
-
-static void tcp_send_test(const char *str);
+/*测试函数*/
+static void tcp_send_test(const char* str);
 static void ultrasonic_ranging_test();
+static void step_motor_test(const std::string orientation,const int steps){
 
 int main(int argc, char* argv[]){
 	const char* str = "{\"id\":6,\"recyleBitMap\":14,\"location\":[120.3532, 30.3242],\"usage\":[0.9, 1, 1, 0.5]}";
@@ -13,6 +16,8 @@ int main(int argc, char* argv[]){
 	int type=0;
 	const char* fileName="garbage.jpg";
 	std::vector<std::string>* objectNames=new std::vector<std::string>();
+
+	step_motor_test("clockwise",128);
 
 	while(1){
 		waitForMyPic();
@@ -28,6 +33,8 @@ int main(int argc, char* argv[]){
 
 	tcp_send_test(str);
 	ultrasonic_ranging_test();
+	step_motor_test("clockwise",128);
+
 
 	delete(objectNames);
 	return 0;
@@ -59,3 +66,17 @@ static void ultrasonic_ranging_test(){
 	return;
 }
 
+static void step_motor_test(const string orientation,const int steps){
+	motorInit();
+
+	if(orientation=="clockwise"){
+		forward(steps);
+	}else if(orientation=="anticlockwise"){
+		backward(steps);
+	}else{
+		std<<cout<<"wrong arg1"<<endl;
+	}
+
+	stop();
+	return;
+}

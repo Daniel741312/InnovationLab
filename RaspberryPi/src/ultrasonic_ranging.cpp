@@ -1,13 +1,17 @@
 #include "ultrasonic_ranging.h"
 
-#define Trig    0  
-#define Echo    1  
+#define TRIG 4  
+#define ECHO 5  
 
-/*设置0号引脚输出触发信号，1号引脚输入返回的信号，注意这里的引脚是按照wiringPi编码的，参考README中的树莓派引脚图*/
-void ultraInit(void){  
-	pinMode(Echo, INPUT);  
-	pinMode(Trig, OUTPUT);  
-	return;
+/*设置4号引脚输出触发信号，5号引脚输入返回的信号*/
+int ultraInit(void){  
+	if(-1 == wiringPiSetup()){
+		std::cerr<<"Setup wiringPi failed"<<std::endl;
+		return -1
+	}
+	pinMode(ECHO, INPUT);  
+	pinMode(TRIG, OUTPUT);  
+	return 0;
 }  
 
 float disMeasure(void){  
@@ -17,29 +21,29 @@ float disMeasure(void){
 	long start, stop;
 	float dis;
 
-	/*Trig写2us的低电平*/
-	digitalWrite(Trig, LOW);  
+	/*TRIG写2us的低电平*/
+	digitalWrite(TRIG, LOW);  
 	delayMicroseconds(2);  
 
-	/*Trig写10us的高电平*/
-	digitalWrite(Trig, HIGH);  
+	/*TRIG写10us的高电平*/
+	digitalWrite(TRIG, HIGH);  
 	delayMicroseconds(10);
-	digitalWrite(Trig, LOW);
+	digitalWrite(TRIG, LOW);
 
 	/*
-		*Trig信号：
+		*TRIG信号：
 		*	|----------|
 			|          |
 		  --		    ----
 	*/
 
-	/*Echo==1的时刻是发射ultrasonic的时刻，只要Echo!=1，就死循环阻塞等待在这儿*/
-	while(digitalRead(Echo) != 1);
+	/*ECHO==1的时刻是发射ultrasonic的时刻，只要Echo!=1，就死循环阻塞等待在这儿*/
+	while(digitalRead(ECHO) != 1);
 	/*跳出上面的循环时，就是ultrasonic发射的时刻*/  
 	gettimeofday(&tv1, NULL);
 
 	/*同理，tv2是接收到回射超声波的时刻*/
-	while(digitalRead(Echo) != 0);  
+	while(digitalRead(ECHO) != 0);  
 	gettimeofday(&tv2, NULL);
 
 	start = tv1.tv_sec * 1000000 + tv1.tv_usec;
@@ -48,4 +52,4 @@ float disMeasure(void){
 	dis = (float)(stop - start) / 1000000 * 34000 / 2;
 
 	return dis;  
-}  
+} 

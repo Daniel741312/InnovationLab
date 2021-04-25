@@ -2,37 +2,90 @@
 
 ## 一、系统示意图
 
-<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcVk.a9Ymhj7gT9uGbzwCL.ruUjbBSI8HMM54mpufW697Zwg9dANI7ngW98CGFgCCX91gNHdRDvUcQFfTPMJoUE0!/r"/>
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcanzrTOGIktMxCecS8ju.G3AUZaXpk5oe4nQztgnNN7FdT8ROXYgqeS6vdOdrslO*OzIEuHzv9Ulgkqj9VRqDtk!/r"/>
 
 
 
 ## 二、树莓派与外设的连接和驱动
 
+树莓派的引脚有不同的编码方式，由于我主要用的是C语言，所以用的wiringPi库，故应该使用WiringPi下的编码。
 
-
-### 1-相机模块的安装和使用
-
-
-
-### 2-光敏电阻触发开关的安装和使用
+<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mce2u21c3eM.cSyXw.s9yquInY3T2DoaoT*nw0M.I56NU3yQAjdIf1daj6bcJjG2R.rKPUmHSY0607DEoCKLFaCQ!/r" style="zoom:80%;" />
 
 
 
-### 3-电机控制模块的安装和使用
+引脚约定：
+
+| 树莓派引脚（WiringPi Pin） | 外设引脚      | 导线颜色 |
+| -------------------------- | ------------- | -------- |
+| 22                         | ULN2003_IN1   | 橙色     |
+| 23                         | ULN2003_IN2   | 黄色     |
+| 24                         | ULN2003_IN3   | 绿色     |
+| 25                         | ULN2003_IN4   | 蓝色     |
+| 21                         | 光敏模块的DO  | 黄色     |
+| 4                          | HC-SR04_Trig  | 黄色     |
+| 5                          | HC-SR04_Echo  | 绿色     |
+| 26                         | 舵机的PWM输入 | 橙色     |
+
+### 1-光敏电阻触发相机拍照
+
+对应文件：
+
+- `photosensitive_camera.cpp`和`photosensitive_camera.h`
+
+功能：
+
+- 当人把垃圾放到托盘上后，相机自动拍照，得到垃圾的照片。
+
+实现原理：
+
+- 当光照正常时，光敏电阻模块DO输出为0，一旦被遮挡住（人把垃圾放上去），DO输出为1。利用死循环将程序阻塞在DO==0上，并在后面进行消抖判断。
+- 人把垃圾放上去，光敏电阻输出DO==1后，跳出死循环，进行拍照。
+- 由于我并没有找到如何用C语言控制树莓派拍照的函数调用（可能并没有），但是有控制树莓派拍照的shell命令，故采取了一种相对折中的做法：fork出一个子进程，然后用execl函数替换掉子进程的进程映像为`/usr/bin/raspistill`（控制树莓派拍照的shell命令），后面加上合适的参数，这样就相当于在程序中执行shell命令，实现了拍照功能。
+
+### 2-步进电机驱动模块
+
+对应文件：
+
+- `step_motor.cpp`和`step_motor.h`
+
+功能：
+
+- 得到垃圾类型（映射为4个整数）后，控制步进电机带动四个桶转动一定角度，使对应的垃圾类型的桶对准托盘下方。
+
+实现原理：
+
+- 向ULN2003的IN1~IN4分时写入对应的电平即可，具体见步进电机的驱动原理。另外，步进电机最好用12V驱动（3根锂电池串联，与信号共地），扭矩大，转速高，又快又猛。
+
+### 3-舵机驱动模块
 
 
 
-### 4-超声波测距模块HC-SR04的安装和使用
+### 4-超声波测距模块HC-SR04
 
+对应文件：
 
+- `ultrasonic_ranging.cpp`和`ultrasonic_ranging.h`
+
+功能：
+
+- 测距。
+
+实现原理：
+
+- 参考源码和HS-SR04的原理
 
 
 
 ## 三、图像识别部分
 
+对应文件：
+
+- `waste_sorting.cpp`和`waste_sorting.h`
+
 ### 1-实现思路概述
 
-When it comes to 图像识别，首先想到的肯定是深度学习，但是我并不会，只懂个其中的皮毛，所以采用了一种更为简单的解决方案：使用<a href="https://ai.baidu.com">BaiduAI开放平台</a>提供的图像识别接口同时配合<a href="https://www.tianapi.com/">天行数据</a>提供的垃圾分类查询接口实现图像识别并分类（干啥啥不行，调用api第一名）。因此这部分的功能就是读入一张垃圾的图片，输出它属于什么垃圾（用一个整数表示）。
+When it comes to 图像识别，首先想到的肯定是深度学习，但是我并不会，只懂个其中的皮毛，所以采用了一种更为简单的解决方案：使用<a href="https://ai.baidu.com">BaiduAI开放平台</a>提供的图像识别接口同时配合<a href="https://www.tianapi.com/">天行数据</a>提供的垃圾分类查询接口实现图像识别并分类。因此这部分的功能就是读入一张垃圾的图片，输出它属于什么垃圾（用一个整数表示）。
 
 代码实现在`waste_sorting.cpp`文件中，下面结合头文件`waste_sorting.h`中的函数声明简单说明其原理：
 
@@ -100,7 +153,7 @@ int getGarbageNamesByImage(const char* fileName, std::vector<std::string>* objec
 
 相关字段含义应该很清楚，可参阅api文档。
 
-接下来解析这个JSON对象，拿到所有的"keyword"（实验中发现"score"最高结果的也可能是错的，出于容错性的考虑，所有的"keyword"都带走），存到第二个参数`objectNames`指向的一个字符串数组中去（这个指针是一个传出参数，由函数调用者维护）。这样函数调用者就能拿到图片中物体的所有可能类型了。
+接下来解析这个JSON对象，拿到所有的"keyword"（实验中发现"score"最高结果的也可能是错的，出于容错性的考虑，所有的"keyword"都带走），存到第二个参数`objectNames`指向的一个字符串数组中去（传出参数）。这样函数调用者就能拿到图片中物体的所有可能类型了。
 
 接下来将`objectNames`传给函数`getGarbageCategoryByNames`，它会将其中的每个字符串一一取出，写到post请求的参数中去，然后逐一向天行数据api发送HTTPpost请求查询这个物体的垃圾类型，一旦查询成功，就break，返回垃圾类型。四种垃圾类型用四个整数表示，映射关系在上面的注释里。
 
@@ -116,9 +169,7 @@ int getGarbageNamesByImage(const char* fileName, std::vector<std::string>* objec
 
 #### 2.安装相关的库
 
-先吐槽一下，我在本地机器上（Ubuntu18.04）明明能够跑通，但是在树莓派（Debian）却跑不通，编译文件时一直报错Json库下的一个什么函数是什么未定义的引用，动态链接器报的错，我查了半天确认了相关目录下有`libjsoncpp`动态库，但是g++死活找不到，一气之下直接重装系统，一次编译运行成功（重启能解决99%的问题，重装系统能解决100%的问题，甚至还可能把有问题的人解决掉）。
-
-言归正传，下面记录这三个库的安装：
+如果库的安装或使用有错误，直接给树莓派重装系统吧。
 
 ###### libcurl库
 
@@ -185,7 +236,7 @@ sudo make install
 
 ###### openssl库
 
-负责https的吧，跟安全有关，安装就完事了；
+负责https的吧，跟安全有关；
 
 安装方法：
 
@@ -209,7 +260,7 @@ sudo apt-get install libssl-dev
 
 ## 四、服务端部分
 
-这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（我没有域名和公网IP，只在局域网里玩玩），两个服务器程序配合：TCPServer接受来自树莓派的封装了垃圾桶最新信息的报文，将其解析为JSON对象，并写入到`allTrashesInfo.json`文件中去；WebServer负责向用户在地图上展示垃圾桶的位置和usage以及是否已满，其实基本上就是把<a href="http://lbsyun.baidu.com/">百度地图api</a>提供的示例代码改一改，很简单。
+这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（我没有域名和公网IP，只在局域网里玩玩），TCPServer和WebServer这两个服务器程序相配合：TCPServer接收来自树莓派端封装了垃圾桶最新使用状态信息（usage）的报文，将其解析为JSON对象，并写入到`allTrashesInfo.json`文件中去；WebServer负责向用户在地图上展示垃圾桶的位置和usage以及是否已满，其实基本上就是把<a href="http://lbsyun.baidu.com/">百度地图api</a>提供的示例代码改一改，很简单。
 
 ### 1-目录结构
 
@@ -250,7 +301,7 @@ sudo apt-get install libssl-dev
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfa*JFw*ZfYwJ*xSKBh3ff**CiJf0t8QUrlENdN7ot*6xeb9pHi9mWtGs2HIobibyX0!/r"/>
 
-界面很丑不要打我，毕竟画16个垃圾桶已经够难为我了，谁能想到还要干美工的活233？
+界面很丑，毕竟直男审美。
 
 这部分比较简单：
 
@@ -263,8 +314,3 @@ sudo apt-get install libssl-dev
 
 https://github.com/Daniel741312/InnovationLab/tree/master/Servers
 
-## 五、树莓派引脚图
-
-请注意引脚有不同的编码方式，由于我主要用的C语言，所以用的WiringPi库，故应该使用WiringPi下的编码。
-
-<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mce2u21c3eM.cSyXw.s9yquInY3T2DoaoT*nw0M.I56NU3yQAjdIf1daj6bcJjG2R.rKPUmHSY0607DEoCKLFaCQ!/r" style="zoom:80%;" />

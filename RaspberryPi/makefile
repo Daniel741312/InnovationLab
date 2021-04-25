@@ -15,7 +15,7 @@ myArgs=-Wall -ljsoncpp -lcurl -lcrypto -lwiringPi -DTEST
 #头文件所在目录
 include_path=include
 
-#用“功能模块”的目标文件和main的目标文件编译成main的elf可执行文件(最终的目标)
+#用“功能模块”的目标文件和main的目标文件链接成main的elf可执行文件(最终的目标)
 ALL:main
 main:$(obj) $(obj_main)
 	g++  $^ -o $@ $(myArgs)

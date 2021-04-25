@@ -8,7 +8,7 @@
 /*测试函数*/
 static void tcp_send_test(const char* str);
 static void ultrasonic_ranging_test();
-static void step_motor_test(const std::string orientation,const int steps);
+static void step_motor_test(std::string orientation,int steps);
 
 int main(int argc, char* argv[]){
 	const char* str = "{\"id\":6,\"recyleBitMap\":14,\"location\":[120.3532, 30.3242],\"usage\":[0.9, 1, 1, 0.5]}";
@@ -17,9 +17,10 @@ int main(int argc, char* argv[]){
 	const char* fileName="garbage.jpg";
 	std::vector<std::string>* objectNames=new std::vector<std::string>();
 
-	step_motor_test("clockwise",128);
+	step_motor_test("clockwise",512);
 
 	while(1){
+
 		waitForMyPic();
 
 		getGarbageNamesByImage(fileName,objectNames);
@@ -66,7 +67,7 @@ static void ultrasonic_ranging_test(){
 	return;
 }
 
-static void step_motor_test(const std::string orientation,const int steps){
+static void step_motor_test(std::string orientation,int steps){
 	motorInit();
 
 	if(orientation=="clockwise"){

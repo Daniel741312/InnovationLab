@@ -10,7 +10,7 @@
 #define IN4 25
 
 /*控制步进电机转速的*/
-#define	DELAY 8
+#define	DELAY 2
 
 /*宏函数，依次向四个引脚写入a,b,c,d四个值*/
 #define SETSTEP(a,b,c,d)\

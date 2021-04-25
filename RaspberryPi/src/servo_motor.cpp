@@ -14,16 +14,16 @@ int throwGarbage(void){
 		delayMicroseconds(1500);
 		digitalWrite(SERVO,LOW);
 		delayMicroseconds(18500);
-
 		cnt--;
 	}
+
+	delay(500);
 
 	while(cnt!=10){
 		digitalWrite(SERVO,HIGH);
 		delayMicroseconds(500);
 		digitalWrite(SERVO,LOW);
 		delayMicroseconds(19500);
-
 		cnt++;
 	}
 

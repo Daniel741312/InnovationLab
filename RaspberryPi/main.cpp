@@ -12,13 +12,15 @@ static void tcp_send_test(const char* str);
 static void ultrasonic_ranging_test();
 static void step_motor_test(std::string orientation,int steps);
 
-int throwItAndReport(int steps);
+float throwItAndGetTheOppositeUsage(int steps);
 
 std::string g_jsonStrToBeSent=R"({"id":6,"recyleBitMap":14,"location":[120.3532, 30.3242],"usage":[0.9, 1, 1, 0.5]})";
 
 int main(int argc, char* argv[]){
 
+	//ultrasonic_ranging_test();
 	int type=0;
+	float usage=0;
 	const char* fileName="garbage.jpg";
 	std::vector<std::string>* objectNames=new std::vector<std::string>();
 
@@ -36,28 +38,29 @@ int main(int argc, char* argv[]){
 		objectNames->push_back(argv[1]);
 		type=getGarbageCategoryByNames(objectNames);
 		(*objectNames).erase((*objectNames).begin(),(*objectNames).end());
-		std::cout<<"----In the waste_sorting:type="<<type<<"----\n\n"<<std::endl;
+		std::cout<<__func__<<"-type-"<<type<<std::endl;
 		switch(type){
 			case(0):{
-				throwItAndReport(0);
+				usage=throwItAndGetTheOppositeUsage(0);
 				break;
 			}
 			case(1):{
-				throwItAndReport(128);
+				usage=throwItAndGetTheOppositeUsage(128);
 				break;
 			}
 			case(2):{
-				throwItAndReport(256);
+				usage=throwItAndGetTheOppositeUsage(256);
 				break;
 			}
 			case(3):{
-				throwItAndReport(-128);
+				usage=throwItAndGetTheOppositeUsage(-128);
 				break;
 			}
 			default:
 				break;
 		}
 		delete(objectNames);
+		std::cout<<__func__<<"-usage-"<<usage<<std::endl;
 		return 0;
 	}
 
@@ -67,29 +70,29 @@ int main(int argc, char* argv[]){
 		getGarbageNamesByImage(fileName,objectNames);
 		type=getGarbageCategoryByNames(objectNames);
 		(*objectNames).erase((*objectNames).begin(),(*objectNames).end());
-		std::cout<<"----In the waste_sorting:type="<<type<<"----\n\n"<<std::endl;
+		std::cout<<__func__<<"-type-"<<type<<std::endl;
 
 		/*
-			0-可回收-蓝色
-  	 		1-有害-红色
-  			2-厨余(湿)-绿色
-   			3-其他(干)-黄色
+			0-可回收-蓝色-顺时针转0度-steps=0
+  	 		1-有害-红色-顺时针转90度-steps=128
+  			2-厨余(湿)-绿色-顺时针转180度-steps=256
+   			3-其他(干)-黄色-逆时针转90度-steps=-128
 		*/
 		switch(type){
 			case(0):{
-				throwItAndReport(0);
+				usage=throwItAndGetTheOppositeUsage(0);
 				break;
 			}
 			case(1):{
-				throwItAndReport(128);
+				usage=throwItAndGetTheOppositeUsage(128);
 				break;
 			}
 			case(2):{
-				throwItAndReport(256);
+				usage=throwItAndGetTheOppositeUsage(256);
 				break;
 			}
 			case(3):{
-				throwItAndReport(-128);
+				usage=throwItAndGetTheOppositeUsage(-128);
 				break;
 			}
 			default:
@@ -102,24 +105,33 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 
-int throwItAndReport(int steps){
+float throwItAndGetTheOppositeUsage(int steps){
 	motorInit();
+	float dis=0;
+	float usage=0;
 	if(steps>=0){
 		forward(steps);
 		stop();
 		sleep(1);
+		/*超声波测距模块距离桶底的高度为22cm，距离桶顶的高度为8.7cm*/
+		dis=disMeasure();
+		usage=(22-dis)/13;
 		throwGarbage();
 		backward(steps);
 		stop();
 	}else{
 		backward(-steps);
 		stop();
+		dis=disMeasure();
+		usage=(22-dis)/13;
 		sleep(1);
 		throwGarbage();
 		forward(-steps);
 		stop();
 	}
-	return 0;
+	/*保留一位小数*/
+	//usage=(int(usage*10+0.5))/10;
+	return usage;
 }
 
 static void tcp_send_test(const char* str){

@@ -18,30 +18,29 @@ server.on("request", function (request, response) {
     if (request.url == "/") {
         /*如果请求的是根目录，则将主页发送给客户端*/
         fs.readFile("./index.html", "utf8", function (err, data) {
-            if(err){
+            if (err) {
                 throw err;
             }
             response.end(data);
         });
     } else if (request.url == "/getAllTrashesInfo") {
-        /*如果发送过来的是ajax请求，则将发送文件allTrashesInfo.json给客户端*/
+        /*如果发送过来的是ajax请求-getAllTrashesInfo，则将发送文件allTrashesInfo.json给客户端*/
         fs.readFile("../allTrashesInfo.json", "utf-8", function (err, data) {
-            if(err){
+            if (err) {
                 throw err;
             }
             response.end(data);
         });
     } else if (request.url == "/favicon.ico") {
         fs.readFile("./img/favicon.ico", function (err, data) {
-            if(err){
+            if (err) {
                 throw err;
             }
             response.end(data);
-        })
-
+        });
     } else if (request.url == "/map.js") {
         fs.readFile("./map.js", "utf-8", function (err, data) {
-            if(err){
+            if (err) {
                 throw err
             }
             response.end(data);
@@ -49,7 +48,7 @@ server.on("request", function (request, response) {
     } else {
         /*如果请求不同的垃圾桶Icon，将对应的图片发给前端*/
         fs.readFile("./img" + request.url, "binary", function (err, data) {
-            if(err){
+            if (err) {
                 throw err;
             }
             response.write(data, "binary");

@@ -1,8 +1,9 @@
 #ifndef __SERVO_MOTOR_H__
 #define __SERVO_MOTOR_H__
 
-#include <iostream>                                                                                                                                                                       
 #include <wiringPi.h>
+
+#include <iostream>
 
 #define SERVO 26
 

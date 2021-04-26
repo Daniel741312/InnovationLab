@@ -1,23 +1,19 @@
 #ifndef __WRAP_H__
 #define __WRAP_H__
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <arpa/inet.h>
-#include <sys/types.h>
-#include <sys/socket.h>
+#include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#include <ctype.h>
-#include <signal.h>
-#include <pthread.h>
-
-#define SERVER_PORT 9526 
-#define SERVER_IP   "127.0.0.1"
-#define MAXLEN		128
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 void perr_exit(const char* str);
 int Accept(int sockfd, struct sockaddr* addr, socklen_t* addrlen);

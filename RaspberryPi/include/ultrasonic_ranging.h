@@ -1,12 +1,17 @@
 #ifndef __ULTRASONIC_RANGING_H__
 #define __ULTRASONIC_RANGING_H__
 
-#include <sys/time.h>
-#include <wiringPi.h>
+namespace ultrasonic_ranging {
 
-#include <iostream>
+class UltraSonicRanging {
+   public:
+    UltraSonicRanging(int ECHO, int TRIG);
+    ~UltraSonicRanging();
+    float DisMeasure();
+    int echo_;
+    int trig_;
+};
 
-int ultraInit(void);
-float disMeasure(void);
+}  // namespace ultrasonic_ranging
 
 #endif

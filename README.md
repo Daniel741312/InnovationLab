@@ -260,11 +260,13 @@ sudo apt-get install libssl-dev
 
 ## 四、服务端部分
 
-这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（我没有域名和公网IP，只在局域网里玩玩），TCPServer和WebServer这两个服务器程序相配合：TCPServer接收来自树莓派端封装了垃圾桶最新使用状态信息（usage）的报文，将其解析为JSON对象，并写入到`allTrashesInfo.json`文件中去；WebServer负责向用户在地图上展示垃圾桶的位置和usage以及是否已满，其实基本上就是把<a href="http://lbsyun.baidu.com/">百度地图api</a>提供的示例代码改一改，很简单。
+这部分不是跑在树莓派上的，是跑在本地机器，或者正儿八经服务器上的（我没有域名和公网IP，只在局域网里玩玩），**TCPServer**和**WebServer**这两个服务程序相配合：TCPServer接收来自树莓派端封装了**垃圾桶最新使用余量状态信息（usage）**的报文，启动一个线程，将其解析为JSON对象，并写入到`allTrashesInfo.json`文件中去。
+
+WebServer在前端js脚本调用<a href="http://lbsyun.baidu.com/">百度地图api</a>，负责向用户在地图上展示垃圾桶的**位置**和**usage**以及**是否已满**，后端基于NodeJS实现，很简单。
 
 ### 1-目录结构
 
-<img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mce2u21c3eM.cSyXw.s9yquKV57frV95cx*dnDlAhQ9NnHLBeQG7TklWQaSh4rGDIvsLcdgVt7p1.gLeI2ZwSImU!/r"/>
+![image-20210426184750631](/home/daniel/InnovationLab/Pic/image-20210426184750631.png)
 
 ### 2-目录中各个文件作用
 
@@ -277,7 +279,7 @@ sudo apt-get install libssl-dev
       "id" : 0,
       "location" : [ 120.3502, 30.3202 ],
       "recyleBitMap" : 1,
-      "usage" : [ 0.29999999999999999, 0.5, 0.10000000000000001, 0.90000000000000002 ]
+      "usage" : [ 0.2999, 0.5, 0.1000, 0.9000 ]
    }
 ```
 
@@ -291,26 +293,51 @@ sudo apt-get install libssl-dev
 #### 2-TCPServer
 
 - make.sh是一个编译TCPServer.cpp的一个shell脚本，懒得写makefile了，里面就一行编译命令。
-- TCPServer是编译出来的可执行elf文件。
-- TCPServer.cpp是TCP服务器源码，这个TCP服务器的作用是接受来自垃圾桶（树莓派）发过来的一段TCP报文，里面的信息是上面json文件中的那个对象，它包含了这个垃圾桶最新的状态。服务器收到这个报文后，按照其中的内容更新allTrashesInfo.json文件（读入-修改-写回）。服务器程序是多线程的，每当有一个树莓派建立连接都会pthread_create一个子线程去接收报文更新文件，但是这也带来线程安全的问题，比如说线程A正在修改id=0的垃圾桶信息，这时线程B也来修改id=1的垃圾桶信息（线程间共享打开的文件），由于更新json文件的方式是读入-修改-写回，这样就会造成信息的错位，后面的线程会把前面的线程更新好的内容覆盖掉。应该要给文件上锁的，保证各个线程有序更新文件，不过具体怎么写忘记了:(
-- 剩下的两个wrap文件是把用于网络通信的系统调用函数进行了错误处理封装，提供给服务器程序使用，不赘述。
+
+- TCPServer是编译出来的elf可执行文件。
+
+- TCPServer.cpp是TCP服务器源码，这个TCP服务器的作用是接受来自垃圾桶（树莓派）发过来的一段TCP报文，里面的信息是上面json文件中的那个对象，它包含了这个垃圾桶最新的状态。服务器收到这个报文后，按照其中的内容更新allTrashesInfo.json文件（读入-修改-写回）。服务器程序是**多线程**的，每当有一个树莓派建立连接都会pthread_create一个子线程去接收报文更新文件。由于各个线程共享打开的文件，文件属于临界资源，出于**线程安全**的考虑，应用**锁**的机制**对线程访问文件时上锁**，保证每个线程有序更改文件，原理示例如下：
+
+  ```cpp
+  /*进入临界区，加锁*/
+  pthread_mutex_lock(&mutex);
+  
+  /*临界区：操作文件*/
+  
+  pthread_mutex_unlock(&mutex);
+  /*退出临界区，解锁*/
+  ```
+
+  
+
+- 剩下的两个wrap文件是把用于网络通信的系统调用函数进行了**错误处理封装**，提供给服务器程序使用，不赘述。
+
+- StressTest.sh是**测试TCPServer程序**用的，测试时在一两秒内迭代了请求512次，还挺快的。
 
 #### 3-WebServer
 
-这是一个提供给管理者或者用户的Web服务器，用于在地图上展示垃圾桶的使用情况，效果如下：
+这是一个提供给管理者（环卫部门）或者用户的Web服务器，用于在地图上展示垃圾桶的使用情况，效果如下：
 
 <img src="http://r.photo.store.qq.com/psc?/V52npUMi34iSk33hv9bD0cfpZY0kIx2o/45NBuzDIW489QBoVep5mcT64CO8B1yC8SdhkTxeJnfa*JFw*ZfYwJ*xSKBh3ff**CiJf0t8QUrlENdN7ot*6xeb9pHi9mWtGs2HIobibyX0!/r"/>
 
-界面很丑，毕竟直男审美。
+界面很丑不要在意，毕竟直男审美。
 
 这部分比较简单：
 
 - img目录存放了一个favicon.ico图标和16张垃圾桶的图片。在地图上显示不同subtrash满的原理就是bitmap，上面提到过，4个binary位从高到低分别是“可回收（蓝色）”，“有害（红色）”，“厨余（绿色）”，“其他（黄色）”。比如说都没满就是0H（0D，0000B），表现在图上就是四个空条；都满了就是FH（16D，1111B），表现在图上就是“蓝红绿黄”四个条；厨余垃圾和有害满了就是6H（6D，0110B），表现在图上就是红条和绿条，以此类推。
-- index.html是主页代码，没啥东西，直接复制粘贴百度给的示例。
+- index.html是主页代码，没啥东西，body里就一个div容器。
 - map.js是index.html页面的脚本文件，主要负责发送ajax请求获取allTrashesInfo中的json对象，然后创建一张地图，最后根据allTrashInfo中的垃圾桶信息挑选合适的垃圾桶图标绑定上click事件放地图上去，具体见源码。
 - http.js是基于nodejs的一个后端程序，功能很简单，就是前端请求啥发给它啥，没啥大逻辑，几个if-else，具体见源码。
 
 ### 3-服务端源码
 
 https://github.com/Daniel741312/InnovationLab/tree/master/Servers
+
+## 五、开发环境
+
+主机系统是**Ubuntu18.04**；
+
+树莓派跑的官方的是**Debian**系统；
+
+一般用**VSCode**通过**ssh**连接到树莓派上编辑（VSCode天下第一）；
 

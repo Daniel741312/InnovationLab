@@ -1,19 +1,6 @@
-#include <stdio.h>
-#include <unistd.h>
 
-#include "photosensitive_camera.h"
-#include "servo_motor.h"
-#include "step_motor.h"
-#include "tcp_send.h"
-#include "ultrasonic_ranging.h"
-#include "waste_sorting.h"
 
-/*测试函数*/
-static void tcp_send_test(const char* str);
-static void ultrasonic_ranging_test();
-static void step_motor_test(std::string orientation, int steps);
 
-float throwItAndGetTheOppositeUsage(int steps);
 
 // std::string
 // g_jsonStrToBeSent=R"({"id":0,"recyleBitMap":13,"location":[120.332, 30.3242],"usage":[0.9,
@@ -135,47 +122,8 @@ float throwItAndGetTheOppositeUsage(int steps) {
         stop();
     }
     /*保留一位小数*/
+    usage=static_cast<double>(static_cast<int>(usage*10+0.5))/10;
     // usage=(int(usage*10+0.5))/10;
     return usage;
 }
 
-static void tcp_send_test(const char* str) {
-    int ret = sendInfoByTCP(str, strlen(str));
-    printf("----tcp_send_test:%d----\n", ret);
-    return;
-}
-
-static void ultrasonic_ranging_test() {
-    float dis;
-    int times = 30;
-
-    if (wiringPiSetup() == -1) {
-        printf("setup wiringPi failed !\n");
-        return;
-    }
-
-    ultraInit();
-
-    while (times--) {
-        dis = disMeasure();
-        printf("distance = %0.2f cm\n", dis);
-        delay(1000);
-    }
-
-    return;
-}
-
-static void step_motor_test(std::string orientation, int steps) {
-    motorInit();
-
-    if (orientation == "clockwise") {
-        forward(steps);
-    } else if (orientation == "anticlockwise") {
-        backward(steps);
-    } else {
-        std::cout << "wrong arg1" << std::endl;
-    }
-
-    stop();
-    return;
-}

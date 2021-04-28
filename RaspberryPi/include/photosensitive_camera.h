@@ -1,15 +1,18 @@
 #ifndef __PHOTOSENSITIVE_CAMERA_H__
 #define __PHOTOSENSITIVE_CAMERA_H__
 
-#include <sys/wait.h>
-#include <unistd.h>
-#include <wiringPi.h>
+namespace photosensitive_camera {
 
-#include <iostream>
+class PhotoSentiveCamera {
+   public:
+    PhotoSentiveCamera(int DO, bool trigerByA = false);
+    ~PhotoSentiveCamera();
+    void WaitForDO(void (*func)(void*), void* arg);
+    int TakeAPic(const char* delay);
+    int do_;
+    bool triger_mode_=false;
+};
 
-/*光敏模块的数字逻辑输出端DO接树莓派21号引脚*/
-#define DO 21
-
-int waitForMyPic(void);
+}  // namespace photosensitive_camera
 
 #endif

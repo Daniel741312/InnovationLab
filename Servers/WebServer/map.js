@@ -43,7 +43,7 @@ function drawMap(allTrashesInfo) {
 
     for (var i = 0; i < n; i++) {
         pointsArray[i] = new BMapGL.Point(allTrashesInfo[i]["location"][0], allTrashesInfo[i]["location"][1]);
-        myIconArray[i] = new BMapGL.Icon(allTrashesInfo[i]["recyleBitMap"] + ".png", new BMapGL.Size(40, 40));
+        myIconArray[i] = new BMapGL.Icon(allTrashesInfo[i]["recyleBitMap"] + ".png", new BMapGL.Size(80, 80));
 
         markersArray[i] = new BMapGL.Marker(pointsArray[i], { icon: myIconArray[i] });
 

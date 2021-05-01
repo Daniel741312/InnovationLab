@@ -3,19 +3,15 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <wiringPi.h>
+#include <stdlib.h>
 
 namespace step_motor {
 
-StepMotor::StepMotor(int IN1, int IN2, int IN3, int IN4, int interval = 4) {
+StepMotor::StepMotor(int IN1, int IN2, int IN3, int IN4, int interval) {
     if (wiringPiSetup() == -1) {
         write(STDERR_FILENO, "Setup wiringPi failed\nexit now\n", 32);
         exit(-1);
     }
-    /*设置四个引脚为输出模式*/
-    pinMode(in1_, OUTPUT);
-    pinMode(in2_, OUTPUT);
-    pinMode(in3_, OUTPUT);
-    pinMode(in4_, OUTPUT);
 
     in1_ = IN1;
     in2_ = IN2;
@@ -23,10 +19,19 @@ StepMotor::StepMotor(int IN1, int IN2, int IN3, int IN4, int interval = 4) {
     in4_ = IN4;
     interval_= interval;
 
-    printf("A new StepMotor:IN1-%d,IN2-%d,IN3-%d,IN4-%d,delay-%d\n", in1_, in2_, in3_, in4_, delay_);
+    /*设置四个引脚为输出模式*/
+    pinMode(in1_, OUTPUT);
+    pinMode(in2_, OUTPUT);
+    pinMode(in3_, OUTPUT);
+    pinMode(in4_, OUTPUT);
+
+    printf("A new StepMotor:IN1-%d,IN2-%d,IN3-%d,IN4-%d,delay-%d\n", in1_, in2_, in3_, in4_, interval_);
 }
 
-StepMotor::~StepMotor() { printf("StepMotor has been removed\n"); }
+StepMotor::~StepMotor() { 
+    SetStep(0, 0, 0, 0);
+    printf("StepMotor has been removed\n"); 
+}
 
 void StepMotor::RotateClockwise(int steps) {
     for (int i = 0; i < steps; i++) {

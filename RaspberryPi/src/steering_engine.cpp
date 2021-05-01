@@ -2,20 +2,22 @@
 
 #include <unistd.h>
 #include <wiringPi.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 /*
 #define SERVO 26
 */
 namespace steering_engine {
 
-SteerEngine::SteerEngine(int PWM = 26) {
+SteerEngine::SteerEngine(int PWM) {
     if (wiringPiSetup() == -1) {
         write(STDERR_FILENO, "Setup wiringPi failed\nexit now\n", 32);
         exit(-1);
     }
     this->pwm_pin_ = PWM;
     pinMode(pwm_pin_, OUTPUT);
-    printf("A new SteerEngine:PWM-%d", pwm_pin_);
+    printf("A new SteerEngine:PWM-%d\n", pwm_pin_);
 }
 
 SteerEngine::~SteerEngine() { printf("SteerEngine has been removed\n"); }

@@ -4,7 +4,25 @@
 
 #include "../aip-cpp-sdk-0.8.5/image_classify.h"
 
+static int writer(char* data, size_t size, size_t nmemb, std::string* writer_data) {
+    /*写入多少字节*/
+    unsigned long sizes = size * nmemb;
+    if (writer_data==nullptr) {
+        return 0;
+    }
+    writer_data->append(data, sizes);
+    return sizes;
+}
+
 namespace waste_sorting{
+
+WasteSorting::WasteSorting(){
+
+}
+
+WasteSorting::~WasteSorting(){
+
+}
 
 int WasteSorting::getGarbageNamesByImage(const char* fileName,std::vector<std::string>* objectNames) {
 
@@ -122,14 +140,6 @@ int WasteSorting::getGarbageCategoryByNames(std::vector<std::string>* objectName
     return garbageCategogry;
 }
 
-int WasteSorting::writer(char* data, size_t size, size_t nmemb, std::string* writer_data) {
-    /*写入多少字节*/
-    unsigned long sizes = size * nmemb;
-    if (writer_data==nullptr) {
-        return 0;
-    }
-    writer_data->append(data, sizes);
-    return sizes;
-}
+
 
 }

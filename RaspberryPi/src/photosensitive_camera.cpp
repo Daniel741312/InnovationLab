@@ -3,13 +3,16 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <wiringPi.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
 
 /*
 #define DO 21
 */
 namespace photosensitive_camera {
 
-PhotoSentiveCamera::PhotoSentiveCamera(int int DO, bool trigerByA = false) {
+PhotoSentiveCamera::PhotoSentiveCamera(int DO, bool trigerByA) {
     if (wiringPiSetup() == -1) {
         write(STDERR_FILENO, "Setup wiringPi failed\nexit now\n", 32);
         exit(-1);
@@ -25,7 +28,7 @@ PhotoSentiveCamera::~PhotoSentiveCamera() {
 }
 
 void PhotoSentiveCamera::WaitForDO(void (*func)(void*), void* arg) {
-    if (triger_mode_) {
+    if (!triger_mode_) {
         while (1) {
             /*光照正常时，引脚为低电平，程序阻塞在这里*/
             while (digitalRead(do_) == 0);
@@ -88,10 +91,11 @@ int PhotoSentiveCamera::TakeAPic(const char* delay) {
             }
         }else{
         /*子进程非正常退出，可能被终止了*/
-            write(STDERR_FILENO, "Child process unnormally\n",26)
+            write(STDERR_FILENO, "Child process unnormally\n",26);
             return -1;
         }
     }
+    return 0;
 }
 
 }  // namespace photosensitive_camera
